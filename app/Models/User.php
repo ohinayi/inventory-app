@@ -32,6 +32,14 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function procurements(){
+        return $this->hasMany(Procurement::class);
+    }
+
+    public function employee(){
+        return $this->belongsTo(Employee::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
