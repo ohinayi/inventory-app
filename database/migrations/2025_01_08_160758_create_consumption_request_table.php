@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Employee;
+use App\Models\Item;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,8 +16,8 @@ return new class extends Migration
         // Consumption Requests
         Schema::create('consumption_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Employee::class)->constrained();
-            $table->foreignIdFor(\App\Models\Item::class)->constrained();
+            $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Item::class)->constrained()->cascadeOnDelete();
             $table->integer('quantity');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('reason')->nullable();
