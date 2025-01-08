@@ -8,7 +8,11 @@ export default {
 		'./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
 		 './storage/framework/views/*.php',
 		 './resources/views/**/*.blade.php',
-		 "./vendor/robsontenorio/mary/src/View/Components/**/*.php"
+		 "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
+         './resources/js/**/*.jsx',
+         './pages/**/*.{js,jsx,ts,tsx}',
+         './components/**/*.{js,jsx,ts,tsx}',
+         './app/**/*.{js,jsx,ts,tsx}',
 	],
 
     theme: {
