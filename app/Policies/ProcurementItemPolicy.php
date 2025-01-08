@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Helpers\PolicyHelpers;
 use App\Models\ProcurementItem;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -13,7 +14,8 @@ class ProcurementItemPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
+
     }
 
     /**
@@ -21,7 +23,8 @@ class ProcurementItemPolicy
      */
     public function view(User $user, ProcurementItem $procurementItem): bool
     {
-        //
+        return true;
+
     }
 
     /**
@@ -29,7 +32,7 @@ class ProcurementItemPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return PolicyHelpers::keeperAndManager($user);
     }
 
     /**
@@ -37,7 +40,7 @@ class ProcurementItemPolicy
      */
     public function update(User $user, ProcurementItem $procurementItem): bool
     {
-        //
+        return PolicyHelpers::managerOnly($user);
     }
 
     /**
@@ -45,7 +48,7 @@ class ProcurementItemPolicy
      */
     public function delete(User $user, ProcurementItem $procurementItem): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 
     /**
@@ -53,7 +56,7 @@ class ProcurementItemPolicy
      */
     public function restore(User $user, ProcurementItem $procurementItem): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 
     /**
@@ -61,6 +64,6 @@ class ProcurementItemPolicy
      */
     public function forceDelete(User $user, ProcurementItem $procurementItem): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 }

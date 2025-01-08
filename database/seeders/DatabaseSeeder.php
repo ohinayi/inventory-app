@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
         ]);
         User::query()->create([
             "name" => $name,
-            "email" => "firdausi@hanscadi.com",
+            "email" => "firdausi@hanscadi.ng",
             "password" => Hash::make('12345678'),
             "role"=> 'keeper',
             "email_verified_at" => Carbon::now(),

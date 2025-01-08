@@ -18,9 +18,14 @@ class ConsumptionsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('item.name')
+                Forms\Components\Select::make('item_id')
+                    ->relationship('item', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('quantity')
                     ->required()
-                    ->maxLength(255),
+                    ->numeric(),
+                Forms\Components\DateTimePicker::make('consumed_at')
+                    ->required(),
             ]);
     }
 
@@ -29,7 +34,24 @@ class ConsumptionsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('item.name')
             ->columns([
-                Tables\Columns\TextColumn::make('item.name'),
+                Tables\Columns\TextColumn::make('employee.name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('item.name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('quantity')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('consumed_at')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

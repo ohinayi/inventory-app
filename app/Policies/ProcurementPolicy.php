@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Helpers\PolicyHelpers;
 use App\Models\Procurement;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -13,7 +14,8 @@ class ProcurementPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
+
     }
 
     /**
@@ -21,7 +23,7 @@ class ProcurementPolicy
      */
     public function view(User $user, Procurement $procurement): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +31,7 @@ class ProcurementPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +39,8 @@ class ProcurementPolicy
      */
     public function update(User $user, Procurement $procurement): bool
     {
-        //
+        return PolicyHelpers::keeperAndManager($user);
+
     }
 
     /**
@@ -45,7 +48,7 @@ class ProcurementPolicy
      */
     public function delete(User $user, Procurement $procurement): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 
     /**
@@ -53,7 +56,7 @@ class ProcurementPolicy
      */
     public function restore(User $user, Procurement $procurement): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 
     /**
@@ -61,6 +64,6 @@ class ProcurementPolicy
      */
     public function forceDelete(User $user, Procurement $procurement): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 }

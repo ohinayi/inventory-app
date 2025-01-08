@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('is_approved')->default(false);
             $table->foreignIdFor(Item::class)->constrained();
             $table->foreignIdFor(Procurement::class)->constrained()->onDelete('cascade');
-            $table->integer('quantity_received')->default(0);
+            $table->integer('quantity_received')->nullable();
             $table->integer('quantity_requested');
             $table->text('receive_notes')->nullable();
             $table->timestamps();

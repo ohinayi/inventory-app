@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Helpers\PolicyHelpers;
 use App\Models\DailyLimit;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -13,7 +14,7 @@ class DailyLimitPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +22,7 @@ class DailyLimitPolicy
      */
     public function view(User $user, DailyLimit $dailyLimit): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +30,7 @@ class DailyLimitPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return PolicyHelpers::keeperAndManager($user);
     }
 
     /**
@@ -37,7 +38,7 @@ class DailyLimitPolicy
      */
     public function update(User $user, DailyLimit $dailyLimit): bool
     {
-        //
+        return PolicyHelpers::managerOnly($user);
     }
 
     /**
@@ -45,7 +46,7 @@ class DailyLimitPolicy
      */
     public function delete(User $user, DailyLimit $dailyLimit): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 
     /**
@@ -53,7 +54,7 @@ class DailyLimitPolicy
      */
     public function restore(User $user, DailyLimit $dailyLimit): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 
     /**
@@ -61,6 +62,6 @@ class DailyLimitPolicy
      */
     public function forceDelete(User $user, DailyLimit $dailyLimit): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 }

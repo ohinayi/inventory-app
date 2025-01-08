@@ -28,10 +28,19 @@ class ProcurementResource extends Resource
                     ->required(),
                 Forms\Components\Textarea::make('reason')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
-                Forms\Components\TextInput::make('approved_by')
-                    ->numeric(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'pending' => 'Pending', 
+                        'approved'=> 'Approved', 
+                        'rejected'=> 'Rejected',
+                        'partially_received'=> 'Partially Received' ,
+                        'fully_received'=>  'Fully Received', 
+                        'completed'=> 'Completed', 
+                        ]
+                    )->default('pending'),
+                Forms\Components\Select::make('approved_by_id')
+                        // ->label('Approved By')
+                ->relationship('approved_by', 'name'),
                 Forms\Components\DateTimePicker::make('approved_at'),
             ]);
     }
@@ -41,12 +50,10 @@ class ProcurementResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('approved_by')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('approved_by.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('approved_at')
                     ->dateTime()

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignIdFor(Item::class)->constrained()->onDelete('cascade');
             $table->integer('limit');
             $table->timestamps();
+
+            $table->unique(['employee_id', 'item_id']);
         });
     }
 

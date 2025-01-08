@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Helpers\PolicyHelpers;
 use App\Models\Consumption;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -13,7 +14,7 @@ class ConsumptionPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +22,7 @@ class ConsumptionPolicy
      */
     public function view(User $user, Consumption $consumption): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +30,7 @@ class ConsumptionPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return PolicyHelpers::keeperAndManager($user);
     }
 
     /**
@@ -37,7 +38,7 @@ class ConsumptionPolicy
      */
     public function update(User $user, Consumption $consumption): bool
     {
-        //
+        return PolicyHelpers::managerOnly($user);
     }
 
     /**
@@ -45,7 +46,7 @@ class ConsumptionPolicy
      */
     public function delete(User $user, Consumption $consumption): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
     }
 
     /**
@@ -54,6 +55,8 @@ class ConsumptionPolicy
     public function restore(User $user, Consumption $consumption): bool
     {
         //
+        return PolicyHelpers::adminOnly($user);
+
     }
 
     /**
@@ -61,6 +64,8 @@ class ConsumptionPolicy
      */
     public function forceDelete(User $user, Consumption $consumption): bool
     {
+        return PolicyHelpers::adminOnly($user);
+
         //
     }
 }

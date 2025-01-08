@@ -29,6 +29,10 @@ class ItemResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
+                    Forms\Components\TextInput::make('default_limit')
+                    ->required()
+                    ->numeric()
+                    ->default(0),
             ]);
     }
 
@@ -39,6 +43,9 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('quantity')
+                    ->numeric()
+                    ->sortable(),
+                    Tables\Columns\TextColumn::make('default_limit')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

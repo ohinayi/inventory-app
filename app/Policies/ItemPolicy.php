@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Helpers\PolicyHelpers;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -13,7 +14,8 @@ class ItemPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
+
     }
 
     /**
@@ -21,7 +23,7 @@ class ItemPolicy
      */
     public function view(User $user, Item $item): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +31,7 @@ class ItemPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return PolicyHelpers::keeperAndManager($user);
     }
 
     /**
@@ -37,7 +39,7 @@ class ItemPolicy
      */
     public function update(User $user, Item $item): bool
     {
-        //
+        return PolicyHelpers::managerOnly($user);
     }
 
     /**
@@ -45,7 +47,8 @@ class ItemPolicy
      */
     public function delete(User $user, Item $item): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
+
     }
 
     /**
@@ -53,7 +56,8 @@ class ItemPolicy
      */
     public function restore(User $user, Item $item): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
+
     }
 
     /**
@@ -61,6 +65,7 @@ class ItemPolicy
      */
     public function forceDelete(User $user, Item $item): bool
     {
-        //
+        return PolicyHelpers::adminOnly($user);
+
     }
 }

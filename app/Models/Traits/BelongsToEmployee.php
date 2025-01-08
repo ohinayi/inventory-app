@@ -9,7 +9,7 @@ trait BelongsToEmployee
 {
     
     public function employee(){
-        return $this->belongsTo(Employee::class, 3);
+        return $this->belongsTo(Employee::class);
     }
     /**
      * Define an inverse one-to-one or many relationship.

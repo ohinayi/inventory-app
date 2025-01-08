@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\EmployeeResource\RelationManagers;
 
+use App\Models\DailyLimit;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -9,6 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rules\Unique;
 
 class DailyLimitsRelationManager extends RelationManager
 {
@@ -18,9 +20,26 @@ class DailyLimitsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('item.name')
+                    Forms\Components\Select::make('item_id')
+                    ->relationship('item', 'name')
+                    ->unique(modifyRuleUsing: function (Unique $rule,RelationManager $livewire, callable $get, ?DailyLimit $record) {
+                        // dump($record->id);
+                        return $rule
+                        ->where('employee_id',  $livewire->getOwnerRecord()->id)
+                        // ->where('id' , $record->id)
+                        ;
+                            // ->where('school_id', $get('school_id')) // get the current value in the 'school_id' field
+                            // ->where('year', $get('year'))
+                            // ->where('name', $get('name'));
+                    })
+                    ->validationMessages([
+                        'unique' => 'A limit for the employee with the item has already being set',
+                    ])
+                    ->required(),
+                
+                Forms\Components\TextInput::make('limit')
                     ->required()
-                    ->maxLength(255),
+                    ->numeric(),
             ]);
     }
 
@@ -29,7 +48,21 @@ class DailyLimitsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('item.name')
             ->columns([
-                Tables\Columns\TextColumn::make('item.name'),
+                Tables\Columns\TextColumn::make('employee.name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('item.name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('limit')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

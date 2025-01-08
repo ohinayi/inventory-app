@@ -23,9 +23,9 @@ class ConsumptionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('employee_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('employee_id')
+                ->relationship('employee', 'name')
+                    ->required(),
                 Forms\Components\Select::make('item_id')
                     ->relationship('item', 'name')
                     ->required(),
@@ -41,11 +41,9 @@ class ConsumptionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('employee_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('employee.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('item.name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()

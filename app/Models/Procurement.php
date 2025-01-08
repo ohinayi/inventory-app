@@ -15,4 +15,13 @@ class Procurement extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function approved_by() : BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approved_by_id');
+    }
+
+    public function procurementItems(){
+        return $this->hasMany(ProcurementItem::class);
+    }
 }

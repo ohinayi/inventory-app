@@ -18,8 +18,18 @@ class ProcurementItemsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('item.name')
+                Forms\Components\Toggle::make('is_approved'),
+                Forms\Components\Select::make('item_id')
+                    ->relationship('item', 'name')
+                    ->required(),
+                Forms\Components\Textarea::make('receive_notes')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('quantity_received')
+                    ->numeric()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('quantity_requested')
                     ->required()
+                    ->numeric()
                     ->maxLength(255),
             ]);
     }
@@ -30,6 +40,10 @@ class ProcurementItemsRelationManager extends RelationManager
             ->recordTitleAttribute('item.name')
             ->columns([
                 Tables\Columns\TextColumn::make('item.name'),
+                Tables\Columns\TextColumn::make('quantity_received'),
+                Tables\Columns\TextColumn::make('quantity_received'),
+                Tables\Columns\TextColumn::make('quantity_requested'),
+                Tables\Columns\IconColumn::make('is_approved')->boolean()
             ])
             ->filters([
                 //
