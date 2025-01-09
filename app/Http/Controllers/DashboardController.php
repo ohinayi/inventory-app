@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
             $userId = auth()->id();
             $items = Item::all();
-            $vouchers = Voucher::all();
+            $vouchers = Voucher::where('user_id', $userId)->latest()->limit(4)->get();
             $consumptionRequests = ConsumptionRequest::where('user_id', $userId)->with('item')->latest()->limit(5)->get();
             return Inertia::render('Dashboard', ['items'=>$items, 'consumptionRequests'=> $consumptionRequests, 'vouchers'=>$vouchers]);
 

@@ -12,6 +12,8 @@ use Inertia\Inertia;
 class VoucherController extends Controller
 {
     public function index () {
+        $vouchers = Voucher::all();
+        return Inertia::render('Voucher/Index', ['vouchers' => $vouchers]);
 
     }
 

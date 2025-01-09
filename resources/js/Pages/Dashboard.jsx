@@ -25,6 +25,7 @@ import {
     Trash2
 } from 'lucide-react';
 import NewVoucherModal from './NewVoucher';
+import { MenuButton } from '@headlessui/react';
 
 export default function Dashboard({auth, items, consumptionRequests, vouchers}) {
     // console.log(items)
@@ -63,10 +64,7 @@ export default function Dashboard({auth, items, consumptionRequests, vouchers}) 
                             <div className="flex justify-between items-center">
                                 <h1 className="text-3xl font-bold">user Dashboard</h1>
                                 <div className="space-x-2">
-                                <Button onClick={() => Inertia.visit('/consumption-requests')} className='text-white'>
-                                        <Plus className="h-4 w-4 mr-2" />
-                                        See More
-                                    </Button>
+
                                     <Button onClick={() => setShowNewRequestModal(true)} className='text-white'>
                                         <Plus className="h-4 w-4 mr-2" />
                                         New Request
@@ -101,8 +99,12 @@ export default function Dashboard({auth, items, consumptionRequests, vouchers}) 
 
                                 <TabsContent value="requests">
                                     <Card>
-                                        <CardHeader>
+                                        <CardHeader className=' flex flex-row items-center justify-between'>
                                             <CardTitle>Recent Consumption Requests</CardTitle>
+                                            <Button onClick={() => Inertia.visit('/consumption-requests')} className='text-white'>
+                                        <Plus className="h-4 w-4 mr-2" />
+                                        See More
+                                    </Button>
                                         </CardHeader>
                                         <CardContent>
                                             <Table>
@@ -142,8 +144,12 @@ export default function Dashboard({auth, items, consumptionRequests, vouchers}) 
 
                                 <TabsContent value="vouchers">
                                     <Card>
-                                        <CardHeader>
+                                        <CardHeader className=' flex flex-row items-center justify-between'>
                                             <CardTitle>Recent Vouchers</CardTitle>
+                                            <Button onClick={() => Inertia.visit('/vouchers')} className='text-white'>
+                                        <Plus className="h-4 w-4 mr-2" />
+                                        See More
+                                    </Button>
                                         </CardHeader>
                                         <CardContent>
                                             <Table>
