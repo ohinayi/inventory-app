@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ConsumptionRequest;
 use App\Models\Item;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -16,8 +17,9 @@ class DashboardController extends Controller
     {
             $userId = auth()->id();
             $items = Item::all();
-            $consumptionRequests = ConsumptionRequest::where('user_id', $userId)->with('item')->get();
-            return Inertia::render('Dashboard', ['items'=>$items, 'consumptionRequests'=> $consumptionRequests]);
+            $vouchers = Voucher::all();
+            $consumptionRequests = ConsumptionRequest::where('user_id', $userId)->with('item')->latest()->limit(5)->get();
+            return Inertia::render('Dashboard', ['items'=>$items, 'consumptionRequests'=> $consumptionRequests, 'vouchers'=>$vouchers]);
 
     }
     // public function index (){}

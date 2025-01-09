@@ -3,6 +3,7 @@
 use App\Http\Controllers\ConsumptionRequestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VoucherController;
 use App\Models\ConsumptionRequest;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,8 +20,10 @@ Route::name('keeper.')->group(function () {
     Volt::route('/keeper/procurements', 'keeper.procurements')->name('procurements')->middleware('auth');
 });
 
+Route::resource('vouchers', VoucherController::class);
 
-Route::apiResource('consumption-requests',ConsumptionRequestController::class)->except(['index', 'show']);
+
+Route::Resource('consumption-requests',ConsumptionRequestController::class);
 
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 

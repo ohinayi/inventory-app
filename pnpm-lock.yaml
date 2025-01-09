@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@inertiajs/inertia':
+        specifier: ^0.11.1
+        version: 0.11.1
+      '@inertiajs/inertia-react':
+        specifier: ^0.8.1
+        version: 0.8.1(@inertiajs/inertia@0.11.1)(react@18.3.1)
       '@inertiajs/react':
         specifier: ^2.0.0
         version: 2.0.0(react@18.3.1)
@@ -363,6 +369,15 @@ packages:
 
   '@inertiajs/core@2.0.0':
     resolution: {integrity: sha512-2kvlk731NjwfXUku/ZoXsZNcOzx985icHtTC1dgN+8sAZtJfEg9QBrQ7sBjeLYiWtKgobJdwwpeDaexEneAtLQ==}
+
+  '@inertiajs/inertia-react@0.8.1':
+    resolution: {integrity: sha512-9Uu7t4EA9FrcREwWnOU/qW5i4hYFt+uFn5cqP6RGJo8lJS4u8t6Q9358oHuQUKbFEbaIjUu7aslCL3/Istctlg==}
+    peerDependencies:
+      '@inertiajs/inertia': ^0.11.0
+      react: ^16.9.0 || ^17.0.0 || ^18.0.0
+
+  '@inertiajs/inertia@0.11.1':
+    resolution: {integrity: sha512-btmV53c54oW4Z9XF0YyTdIUnM7ue0ONy3/KJOz6J1C5CYIwimiKfDMpz8ZbGJuxS+SPdOlNsqj2ZhlHslpJRZg==}
 
   '@inertiajs/react@2.0.0':
     resolution: {integrity: sha512-7X6TMYe7FcjG05UjRBkPYjTw/U+CrMeVDxxRolncuNYp6LmifPs1xOjTOC5M7gbpKaDEL/LuxNAX7ePJC3cbPg==}
@@ -848,6 +863,9 @@ packages:
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
+
+  axios@0.21.4:
+    resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
 
   axios@1.7.2:
     resolution: {integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==}
@@ -1867,6 +1885,20 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@inertiajs/inertia-react@0.8.1(@inertiajs/inertia@0.11.1)(react@18.3.1)':
+    dependencies:
+      '@inertiajs/inertia': 0.11.1
+      lodash.isequal: 4.5.0
+      react: 18.3.1
+
+  '@inertiajs/inertia@0.11.1':
+    dependencies:
+      axios: 0.21.4
+      deepmerge: 4.3.1
+      qs: 6.13.1
+    transitivePeerDependencies:
+      - debug
+
   '@inertiajs/react@2.0.0(react@18.3.1)':
     dependencies:
       '@inertiajs/core': 2.0.0
@@ -2251,6 +2283,12 @@ snapshots:
       picocolors: 1.0.1
       postcss: 8.4.39
       postcss-value-parser: 4.2.0
+
+  axios@0.21.4:
+    dependencies:
+      follow-redirects: 1.15.6
+    transitivePeerDependencies:
+      - debug
 
   axios@1.7.2:
     dependencies:

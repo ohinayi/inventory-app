@@ -5,8 +5,8 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import NewRequestModal from '../components/NewRequestModal';
+import { Inertia } from '@inertiajs/inertia';
 
-import { Textarea } from "@/components/ui/textarea";
 import {
     Table,
     TableBody,
@@ -24,41 +24,13 @@ import {
     Plus,
     Trash2
 } from 'lucide-react';
+import NewVoucherModal from './NewVoucher';
 
-export default function Dashboard({auth, items, consumptionRequests}) {
+export default function Dashboard({auth, items, consumptionRequests, vouchers}) {
     // console.log(items)
     const [activeTab, setActiveTab] = useState('requests');
     const [showNewRequestModal, setShowNewRequestModal] = useState(false);
     const [showNewVoucherModal, setShowNewVoucherModal] = useState(false);
-
-    // Mock data
-    // const consumptionRequests = [
-    //     {
-    //         id: 1,
-    //         date: '2025-01-08',
-    //         status: 'pending',
-    //         item: { name: 'Printer Paper' },
-    //         quantity: 2,
-    //         reason: 'Monthly supply',
-    //         approved_by: null,
-    //         approved_at: null
-    //     }
-    // ];
-
-    const vouchers = [
-        {
-            id: 1,
-            voucher_number: 'V-2025-001',
-            date: '2025-01-08',
-            status: 'pending',
-            purpose: 'Office supplies reimbursement',
-            total_amount: 150.00,
-            items: [
-                { description: 'Printer Paper', amount: 50.00, remarks: 'For office use' },
-                { description: 'Ink Cartridges', amount: 100.00, remarks: 'HP Printer' }
-            ]
-        }
-    ];
 
     const getStatusIcon = (status) => {
         switch (status) {
@@ -91,11 +63,15 @@ export default function Dashboard({auth, items, consumptionRequests}) {
                             <div className="flex justify-between items-center">
                                 <h1 className="text-3xl font-bold">user Dashboard</h1>
                                 <div className="space-x-2">
+                                <Button onClick={() => Inertia.visit('/consumption-requests')} className='text-white'>
+                                        <Plus className="h-4 w-4 mr-2" />
+                                        See More
+                                    </Button>
                                     <Button onClick={() => setShowNewRequestModal(true)} className='text-white'>
                                         <Plus className="h-4 w-4 mr-2" />
                                         New Request
                                     </Button>
-                                    <Button variant="outline" onClick={() => setShowNewVoucherModal(true)}>
+                                    <Button variant="outline" onClick={() => Inertia.visit('/vouchers/create')}>
                                         <Plus className="h-4 w-4 mr-2" />
                                         New Voucher
                                     </Button>
@@ -109,6 +85,7 @@ export default function Dashboard({auth, items, consumptionRequests}) {
                                     items={items}
                                 />
                             )}
+
 
                             <Tabs defaultValue="requests" className="w-full">
                                 <TabsList>
@@ -181,7 +158,7 @@ export default function Dashboard({auth, items, consumptionRequests}) {
                                                     </TableRow>
                                                 </TableHeader>
                                                 <TableBody>
-                                                    {vouchers.map((voucher) => (
+                                                    {vouchers?.map((voucher) => (
                                                         <TableRow key={voucher.id}>
                                                             <TableCell>{voucher.voucher_number}</TableCell>
                                                             <TableCell>{voucher.date}</TableCell>
