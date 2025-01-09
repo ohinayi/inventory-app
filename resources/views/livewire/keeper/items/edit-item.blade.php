@@ -111,8 +111,8 @@ new class extends Component
         </p>
 
         <livewire:edit-model-attribute class="border rounded-md" attribute="name" :model="$this->item" rules='required|string|unique:items,name' />
-        <livewire:edit-model-attribute class="border rounded-md" attribute="quantity" :model="$this->item" rules='numeric' input_type='number' />
-        <livewire:edit-model-attribute class="border rounded-md" attribute="default_limit" :model="$this->item" rules='numeric' input_type='number' />
+       {{-- <livewire:edit-model-attribute class="border rounded-md" attribute="quantity" :model="$this->item" rules='numeric' input_type='number' />
+        --}} <livewire:edit-model-attribute class="border rounded-md" attribute="default_limit" :model="$this->item" rules='numeric' input_type='number' />
 
 
 

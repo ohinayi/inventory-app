@@ -67,12 +67,12 @@
             <x-mary-menu activate-by-route>
                 <x-mary-menu-item title="Home" exact icon="o-home" link="{{ route('keeper.dashboard') }}" wire:navigate />
                 <x-mary-menu-item title="Items" icon="o-rectangle-group" link="{{route('keeper.items')}}"  wire:navigate/>
-                <x-mary-menu-item title="users" icon="o-user-group" link="{{route('keeper.users')}}"  wire:navigate/>
+                <x-mary-menu-item title="Users" icon="o-user-group" link="{{route('keeper.users')}}"  wire:navigate/>
                 <x-mary-menu-item title="Consumptions" icon="o-building-storefront" link="{{route('keeper.consumptions')}}"  wire:navigate/>
-                <x-mary-menu-sub title="Procurements" icon="o-speaker-wave">
-                    <x-mary-menu-item title="M" icon="o-musical-note" link="{{route('keeper.procurements')}}"  wire:navigate/>
-                    <x-mary-menu-item title="Archives" icon="o-archive-box" link="####" />
-                </x-mary-menu-sub>
+                <x-mary-menu-item title="Consumptions Requests" icon="o-building-storefront" link="{{route('keeper.consumption-requests')}}"  wire:navigate/>
+                <x-mary-menu-item title="Procurements" icon="o-information-circle" link="{{route('keeper.procurements')}}"  wire:navigate/>
+               {{--  <x-mary-menu-sub title="Procurements" icon="o-speaker-wave">
+                </x-mary-menu-sub>--}}
                 <x-mary-menu-sub title="Settings" icon="o-cog-6-tooth">
                     <x-mary-menu-item title="Wifi" icon="o-wifi" link="####" />
                     <x-mary-menu-item title="Archives" icon="o-archive-box" link="####" />

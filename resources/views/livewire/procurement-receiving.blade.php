@@ -18,7 +18,7 @@ new class extends Component {
         $this->receivedItems = $this->procurement->procurementItems->map(function ($item) {
             return [
                 'id' => $item->id,
-                'quantity_received' => $item->quantity_received ?? 0,
+                'quantity_received' => $item->quantity_received ?? $item->quantity_requested,
                 'receive_notes' => $item->receive_notes,
             ];
         })->toArray();
@@ -63,14 +63,46 @@ new class extends Component {
     }
 }; ?>
 
-<div>
-    <h3>Receive Items</h3>
+
+<div class="p-8 bg-white rounded-lg shadow-lg max-w-4xl mx-auto">
+    <h3 class="text-2xl font-bold mb-8 text-gray-800 border-b pb-4">Received Items</h3>
+    
     @foreach($receivedItems as $index => $item)
-        <div>
-            {{ $procurement->procurementItems[$index]->item->name }}
-            <input type="number" wire:model="receivedItems.{{ $index }}.quantity_received" min="0">
-            <textarea wire:model="receivedItems.{{ $index }}.receive_notes" placeholder="Receive notes"></textarea>
+    <div class="mb-6 p-6 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 transition duration-150">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="text-lg font-medium text-gray-700">
+                {{ $procurement->procurementItems[$index]->item->name }}
+            </div>
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex flex-col">
+                    <label class="text-sm text-gray-600 mb-1">Quantity Received</label>
+                    <input 
+                        type="number" 
+                        wire:model="receivedItems.{{ $index }}.quantity_received" 
+                        min="0" 
+                        value="{{ $item['quantity_received'] }}"
+                        class="px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    >
+                </div>
+                <div class="flex flex-col flex-grow">
+                    <label class="text-sm text-gray-600 mb-1">Notes</label>
+                    <textarea 
+                        wire:model="receivedItems.{{ $index }}.receive_notes" 
+                        placeholder="Enter receive notes here..."
+                        class="px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 h-20 resize-none"
+                    ></textarea>
+                </div>
+            </div>
         </div>
+    </div>
     @endforeach
-    <button wire:click="updateReceived">Update Received Items</button>
+
+    <div class="mt-8 flex justify-end">
+        <button 
+            wire:click="updateReceived"
+            class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150"
+        >
+            Confirm Receive
+        </button>
+    </div>
 </div>

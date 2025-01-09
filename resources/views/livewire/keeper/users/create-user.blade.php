@@ -1,24 +1,29 @@
 <?php
 
 
-use App\Models\user;
+use App\Models\User;
 use Livewire\Volt\Component;
 
 use Livewire\Attributes\Validate;
 use Mary\Traits\Toast;
+use Illuminate\Support\Facades\Hash;
+
 
 new class extends Component {
     use Toast;
 
-    #[Validate('required|string|unique:items,name')]
+    #[Validate('required|string|unique:users,name')]
     public $name = '';
+
+    #[Validate('required|string|unique:users,email')]
+    public $email = '';
 
 
     public function create(): void{
         // dump($this->thumb);
-        if(request()->user()->can('create', user::class)){
+        if(request()->user()->can('create', User::class)){
             $data =  $this->validate();
-            $user = user::query()->create($data);
+            $user = User::query()->create(['password'=> Hash::make('12345678') ,... $data]);
             $this->dispatch('user-created', user: $user);
             $this->reset();
             $this->success('Successfull', 'user Created Successfully', 'toast-top toast-center' );
@@ -40,7 +45,13 @@ new class extends Component {
 <form wire:submit="create"  class="p-7">
         <!-- Name -->
         <div class="mt-2">
-            <x-mary-input wire:model="name" label="user Name"  inline name='name' />
+            <x-mary-input wire:model="name" label="Name"  inline name='name' />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+         <!-- Error -->
+         <div class="mt-2">
+            <x-mary-input wire:model="email" label="Email"  inline name='email' />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 

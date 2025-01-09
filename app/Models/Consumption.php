@@ -29,6 +29,13 @@ class Consumption extends Model
         // return $this->belongsTo(DailyLimit::class, 'user_id', 'item_id');
     }
 
+    protected function casts(): array
+    {
+        return [
+            'consumed_at' => 'datetime',
+        ];
+    }
+
 
     protected static function booted(): void
     {
