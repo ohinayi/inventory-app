@@ -17,7 +17,7 @@ new class extends Component {
         ]);
 
         $this->procurement->procurementItems()->update(['is_approved' => true]);
-
+        $this->procurement = $this->procurement->refresh();
         $this->dispatch('procurementApproved');
     }
 
@@ -30,13 +30,15 @@ new class extends Component {
             'approved_by_id' => auth()->id(),
             'approved_at' => now(),
         ]);
+        $this->procurement = $this->procurement->refresh();
+        // $this->
 
         $this->dispatch('procurementRejected');
     }
 }; ?>
 
 <div>
-    <h3>Approve or Reject Procurement</h3>
-    <button wire:click="approve">Approve</button>
-    <button wire:click="reject">Reject</button>
+    <!-- <h3>Approve or Reject Procurement</h3> -->
+    <button class="btn btn-warning" wire:click="approve">Approve</button>
+    <button class="btn btn-error" wire:click="reject">Reject</button>
 </div>

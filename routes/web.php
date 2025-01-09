@@ -16,6 +16,7 @@ Route::name('keeper.')->group(function () {
     Volt::route('/keeper/', 'keeper.dashboard')->name('dashboard')->middleware('auth');
     Volt::route('/keeper/items', 'keeper.items')->name('items')->middleware('auth');
     Volt::route('/keeper/users', 'keeper.users')->name('users')->middleware('auth');
+    Volt::route('/keeper/consumption-requests', 'keeper.consumption-requests')->name('consumption-requests')->middleware('auth');
     Volt::route('/keeper/consumptions', 'keeper.consumptions')->name('consumptions')->middleware('auth');
     Volt::route('/keeper/procurements', 'keeper.procurements')->name('procurements')->middleware('auth');
 });

@@ -6,16 +6,16 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 
 new class extends Component {
-    #[Url]
+    #[Url]    
     public $currentView = 'list';
-
-    #[Url]
+     
+    #[Url]    
     public $selectedProcurementId;
 
     #[Computed]
     public function selectedProcurement()
     {
-        return Procurement::findOrFail($this->selectedProcurementId);
+        return Procurement::findOrFail($this->selectedProcurement);
     }
 
     protected $listeners = ['viewChanged', 'procurementSelected'];
@@ -28,7 +28,7 @@ new class extends Component {
     public function procurementSelected($procurementId)
     {
         // $this->selectedProcurement = Procurement::findOrFail($procurementId);
-        $this->selectedProcurementId = $procurementId;
+        $this->selectedProcurementId = Procurement::findOrFail($procurementId);
         $this->currentView = 'detail';
     }
 }; ?>
@@ -39,14 +39,16 @@ new class extends Component {
         <!-- Navigation Tabs -->
         <div class="border-b border-gray-200 mb-8">
             <nav class="flex space-x-8" aria-label="Procurement Sections">
-                <button
+                <button 
                     wire:click="viewChanged('list')"
-                    class="px-3 py-2 text-sm font-medium {{ $currentView === 'list' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                    class="px-3 py-2 text-sm font-medium {{ $currentView === 'list' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300' }}"
+                >
                     Procurement List
                 </button>
-                <button
+                <button 
                     wire:click="viewChanged('form')"
-                    class="px-3 py-2 text-sm font-medium {{ $currentView === 'form' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                    class="px-3 py-2 text-sm font-medium {{ $currentView === 'form' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300' }}"
+                >
                     New Procurement
                 </button>
             </nav>
@@ -55,41 +57,42 @@ new class extends Component {
         <!-- Dynamic Content Section -->
         <div class="bg-white rounded-lg shadow">
             @if($currentView === 'list')
-            <div class="p-6">
-                <livewire:procurement-list />
-            </div>
-            @elseif($currentView === 'form')
-            <div class="p-6">
-                <livewire:procurement-form />
-            </div>
-            @elseif($currentView === 'detail')
-            @if($this->selectedProcurementId)
-            <div class="p-6">
-                <!-- Procurement Details Header -->
-                <div class="border-b border-gray-200 pb-4 mb-6">
-                    <h2 class="text-2xl font-semibold text-gray-900">Procurement Details</h2>
+                <div class="p-6">
+                    <livewire:procurement-list />
                 </div>
-                <!-- Procurement Information -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <p class="text-sm text-gray-500 mb-1">Status</p>
-                        <p class="text-lg font-medium">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
+            @elseif($currentView === 'form')
+                <div class="p-6">
+                    <livewire:procurement-form />
+                </div>
+            @elseif($currentView === 'detail')
+                @if($this->selectedProcurementId)
+                    <div class="p-6">
+                        <!-- Procurement Details Header -->
+                        <div class="border-b border-gray-200 pb-4 mb-6">
+                            <h2 class="text-2xl font-semibold text-gray-900">Procurement Details</h2>
+                        </div>
+
+                        <!-- Procurement Information -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-sm text-gray-500 mb-1">Status</p>
+                                <p class="text-lg font-medium">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
                                         {{ $this->selectedProcurement->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
                                            ($this->selectedProcurement->status === 'approved' ? 'bg-green-100 text-green-800' : 
                                            'bg-blue-100 text-blue-800') }}">
-                                {{ ucfirst($this->selectedProcurement->status) }}
-                            </span>
-                        </p>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <p class="text-sm text-gray-500 mb-1">Reason</p>
-                        <p class="text-lg font-medium">{{ $this->selectedProcurement->reason }}</p>
-                    </div>
-                </div>
+                                        {{ ucfirst($this->selectedProcurement->status) }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-sm text-gray-500 mb-1">Reason</p>
+                                <p class="text-lg font-medium">{{ $this->selectedProcurement->reason }}</p>
+                            </div>
+                        </div>
 
-                   <!-- Procurement Items -->
-                   <div class="mb-8">
+                        <!-- Procurement Items -->
+                        <div class="mb-8">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-lg font-medium text-gray-900">Requested Items</h3>
                             </div>
@@ -143,10 +146,8 @@ new class extends Component {
                                 <livewire:procurement-receiving :procurement="$this->selectedProcurement" />
                             @endif
                         </div>
-
-
-            </div>
-            @endif
+                    </div>
+                @endif
             @endif
         </div>
     </div>
