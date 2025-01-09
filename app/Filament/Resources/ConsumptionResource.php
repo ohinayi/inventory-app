@@ -23,8 +23,8 @@ class ConsumptionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('employee_id')
-                ->relationship('employee', 'name')
+                Forms\Components\Select::make('user_id')
+                ->relationship('user', 'name')
                     ->required(),
                 Forms\Components\Select::make('item_id')
                     ->relationship('item', 'name')
@@ -41,7 +41,7 @@ class ConsumptionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('employee.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('item.name')
                     ->sortable(),

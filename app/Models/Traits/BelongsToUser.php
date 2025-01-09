@@ -2,14 +2,14 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-trait BelongsToEmployee
+trait BelongsToUser
 {
-    
-    public function employee(){
-        return $this->belongsTo(Employee::class);
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
     /**
      * Define an inverse one-to-one or many relationship.

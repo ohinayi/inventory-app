@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Employee;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('daily_limits', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Employee::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Item::class)->constrained()->onDelete('cascade');
             $table->integer('limit');
             $table->timestamps();
 
-            $table->unique(['employee_id', 'item_id']);
+            $table->unique(['user_id', 'item_id']);
         });
     }
 

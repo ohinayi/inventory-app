@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Employee;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('role', ['admin', 'manager', 'keeper', 'user'])->default('user');
-            $table->foreignIdFor(Employee::class)->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

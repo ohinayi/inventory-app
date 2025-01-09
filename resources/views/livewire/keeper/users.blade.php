@@ -3,7 +3,7 @@
 use Filament\Tables\Table;
 
 
-use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Filament\Forms\Contracts\HasForms;
@@ -27,7 +27,7 @@ new  class extends Component
 
     #[Url]
     public $search = '';
-    public ?Employee $model=null;
+    public ?user $model=null;
     public $creating = false;
     public $sortBy = ['column' => 'id', 'direction' => 'asc'];
 
@@ -35,7 +35,7 @@ new  class extends Component
     #[Computed]
     public function hasModel()
     {
-        return $this->model != null;   
+        return $this->model != null;
     }
 
     public function resetQueries()
@@ -44,38 +44,38 @@ new  class extends Component
         $this->resetPage();
     }
 
-    public function setEmployee(Employee $employee){
-        $this->model = $employee;
-        $this->dispatch('employee-changed', employee: $employee);
+    public function setuser(User $user){
+        $this->model = $user;
+        $this->dispatch('user-changed', user: $user);
         $this->dispatch('open-modal', 'model-edit');
 
     }
 
     protected function getQuery(): Builder
     {
-        return Employee::query()
+        return User::query()
             ->where('name', 'like', '%' . $this->search . '%')
             ->orderBy(...array_values($this->sortBy));
     }
 
-    #[On('employee-created')]
-    public function handleEmployeeCreated($employee)
+    #[On('user-created')]
+    public function handleuserCreated($user)
     {
         $this->resetQueries();
-        $this->closeCreateModal($employee);
+        $this->closeCreateModal($user);
     }
 
-    #[On('employee-updated')]
-    public function handleEmployeeUpdated($employee)
+    #[On('user-updated')]
+    public function handleuserUpdated($user)
     {
         $this->resetQueries();
-        if ($employee !== null) {
-            $this->search = $employee['name'];
+        if ($user !== null) {
+            $this->search = $user['name'];
         }
     }
 
-    #[On('employee-create-cancelled')]
-    public function handleEmployeeCreateCancelled()
+    #[On('user-create-cancelled')]
+    public function handleuserCreateCancelled()
     {
         $this->closeCreateModal();
     }
@@ -97,11 +97,11 @@ new  class extends Component
     public function with(): array
     {
         return [
-            'employees' => $this->getQuery()->paginate(),
+            'users' => $this->getQuery()->paginate(),
         ];
     }
-    
-}; 
+
+};
 
 
 
@@ -112,8 +112,8 @@ new  class extends Component
 
 <div class="relative p-6 overflow-x-auto shadow-md sm:rounded-lg">
     <div class="flex items-center gap-4">
-        <x-mary-input clearable label="Search" placeholder="Search a employee" icon="o-magnifying-glass" hint="Start typing the employee name to search" wire:model.live="search" />
-        <button wire:click="openCreateModal" type="button" class="btn btn-outline btn-primary">Create Employee</button>
+        <x-mary-input clearable label="Search" placeholder="Search a user" icon="o-magnifying-glass" hint="Start typing the user name to search" wire:model.live="search" />
+        <button wire:click="openCreateModal" type="button" class="btn btn-outline btn-primary">Create user</button>
         <button wire:click="resetQueries " type="button" class="btn btn-outline btn-primary">Reset Queries </button>
         <div class="flex gap-4">
 
@@ -123,16 +123,17 @@ new  class extends Component
     $headers = [
     ['key' => 'id', 'label' => '#'],
     ['key' => 'name', 'label' => 'Name'],
+    ['key' => 'email', 'label' => 'Email'],
     ['key' => 'created_at', 'label' => 'created']
     ];
     @endphp
-    <x-mary-table :headers="$headers" :rows="$employees" striped @row-click="$wire.setEmployee($event.detail.id)" :sort-by="$sortBy" with-pagination>
+    <x-mary-table :headers="$headers" :rows="$users" striped @row-click="$wire.setuser($event.detail.id)" :sort-by="$sortBy" with-pagination>
 
-        @scope('actions', $employee)
+        @scope('actions', $user)
         <div class="flex gap-1">
 
-            <x-mary-button icon="o-pencil" wire:click="setEmployee({{ $employee->id }})" spinner class="btn-sm" />
-            {{-- <x-mary-button icon="o-trash" wire:click="delete({{ $employee->id }})" spinner class="btn-sm" /> --}}
+            <x-mary-button icon="o-pencil" wire:click="setuser({{ $user->id }})" spinner class="btn-sm" />
+            {{-- <x-mary-button icon="o-trash" wire:click="delete({{ $user->id }})" spinner class="btn-sm" /> --}}
 
         </div>
         @endscope
@@ -140,14 +141,14 @@ new  class extends Component
     </x-mary-table>
 
     <x-modal name name="model-create" :show="$this->creating">
-        <livewire:keeper.employees.create-employee />
+        <livewire:keeper.users.create-user />
     </x-modal>
 
     <!-- Edit interest modal -->
     <x-modal name="model-edit" :show="$this->hasModel" focusable>
 
         @if ($this->model!=null)
-        <livewire:keeper.employees.edit-employee :employee="$this->model" />
+        <livewire:keeper.users.edit-user :user="$this->model" />
         @endif
     </x-modal>
 

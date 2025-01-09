@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Filament\Resources\EmployeeResource\RelationManagers;
+namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use App\Models\DailyLimit;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -10,36 +9,23 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Validation\Rules\Unique;
 
-class DailyLimitsRelationManager extends RelationManager
+class ConsumptionsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'daily_limits';
+    protected static string $relationship = 'consumptions';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                    Forms\Components\Select::make('item_id')
+                Forms\Components\Select::make('item_id')
                     ->relationship('item', 'name')
-                    ->unique(modifyRuleUsing: function (Unique $rule,RelationManager $livewire, callable $get, ?DailyLimit $record) {
-                        // dump($record->id);
-                        return $rule
-                        ->where('employee_id',  $livewire->getOwnerRecord()->id)
-                        // ->where('id' , $record->id)
-                        ;
-                            // ->where('school_id', $get('school_id')) // get the current value in the 'school_id' field
-                            // ->where('year', $get('year'))
-                            // ->where('name', $get('name'));
-                    })
-                    ->validationMessages([
-                        'unique' => 'A limit for the employee with the item has already being set',
-                    ])
                     ->required(),
-                
-                Forms\Components\TextInput::make('limit')
+                Forms\Components\TextInput::make('quantity')
                     ->required()
                     ->numeric(),
+                Forms\Components\DateTimePicker::make('consumed_at')
+                    ->required(),
             ]);
     }
 
@@ -52,8 +38,11 @@ class DailyLimitsRelationManager extends RelationManager
                     ->sortable(),
                 Tables\Columns\TextColumn::make('item.name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('limit')
+                Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('consumed_at')
+                    ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

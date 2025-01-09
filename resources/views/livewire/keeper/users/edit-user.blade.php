@@ -1,7 +1,7 @@
 <?php
 
 use Mary\Traits\Toast;
-use App\Models\Employee;
+use App\Models\user;
 use Livewire\Attributes\On;
 use Livewire\Volt\Component;
 
@@ -9,7 +9,7 @@ new class extends Component
 {
     use  Toast;
 
-    public Employee $employee;
+    public user $user;
 
 
 
@@ -24,49 +24,49 @@ new class extends Component
 
     // public function changeAvatar()
     // {
-    //     if (request()->user()->can('update', $this->employee)) {
-    //         // $this->authorize('update', $this->employee); 
+    //     if (request()->user()->can('update', $this->user)) {
+    //         // $this->authorize('update', $this->user);
     //         $data =  $this->validate();
     //         // Validator::make(['avatar' => $this->avatar], ['avatar' => 'required|image'])->validate();
-    //         $this->employee->update($data);
-    //         $this->refreshEmployee();
-    //         $this->success('Successfull', 'Employee updated Successfully', 'toast-top toast-center' );
+    //         $this->user->update($data);
+    //         $this->refreshuser();
+    //         $this->success('Successfull', 'user updated Successfully', 'toast-top toast-center' );
     //     } else {
-            
+
     //         $this->error('failed', 'You are not authorized', 'toast-top toast-center');
     //         $this->dispatch('close');
     //     }
     // }
 
-    #[On('employee-changed')]
-    public function changeEmployee(Employee $employee)
+    #[On('user-changed')]
+    public function changeuser(user $user)
     {
-        $this->employee = $employee;
+        $this->user = $user;
         $this->reasonForRequest = '';
-        $this->dispatch('reset-form', attrs: $employee);
+        $this->dispatch('reset-form', attrs: $user);
     }
 
     #[On('model-updated')]
-    public function refreshEmployee()
+    public function refreshuser()
     {
-        $this->employee->refresh();
-        $this->dispatch('employee-updated', employee: $this->employee);
+        $this->user->refresh();
+        $this->dispatch('user-updated', user: $this->user);
     }
     // public function requestDelete()
     // {
-    //     if (request()->user()->can('create', ActionRequest::class) && request()->user()->can('update', $this->employee)) {
+    //     if (request()->user()->can('create', ActionRequest::class) && request()->user()->can('update', $this->user)) {
 
     //         Validator::make(['reason_for_request' => $this->reasonForRequest], ['reason_for_request' => 'required|string'])->validate();
-    //         $requests = $this->employee->ActionRequests()->where('user_id', auth()->id())->where('type', 'delete')->where('status', 1)->count();
+    //         $requests = $this->user->ActionRequests()->where('user_id', auth()->id())->where('type', 'delete')->where('status', 1)->count();
     //         if($requests>0){
     //             $this->error('failed', 'You have a pending request', 'toast-top toast-center');
     //             return;
     //         }
-    //         $this->employee->ActionRequests()->create([
+    //         $this->user->ActionRequests()->create([
     //             'description' => $this->reasonForRequest,
     //             'user_id' => auth()->id(),
     //             'type' => 'delete',
-    //             'action' => EmployeeResource::getUrl(),
+    //             'action' => userResource::getUrl(),
     //         ]);
     //         $this->success('Successfull', 'Request Sent Successfully', 'toast-top toast-center' );
 
@@ -83,18 +83,18 @@ new class extends Component
     <div class="p-6">
 
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            Name: {{ $this->employee->name  }}
+            Name: {{ $this->user->name  }}
 
         </h2>
 
 
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Created at: {{ $this->employee->created_at  }}. ||
-            Updated at: {{ $this->employee->updated_at }}
+            Created at: {{ $this->user->created_at  }}. ||
+            Updated at: {{ $this->user->updated_at }}
         </p>
 
-        <livewire:edit-model-attribute class="border rounded-md" attribute="name" :model="$this->employee" rules='required|string|unique:employees,name' />
+        <livewire:edit-model-attribute class="border rounded-md" attribute="name" :model="$this->user" rules='required|string|unique:users,name' />
 
 
 

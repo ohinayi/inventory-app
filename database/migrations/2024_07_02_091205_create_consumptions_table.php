@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Employee;
+use App\Models\user;
 use App\Models\Item;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('consumptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Employee::class)->constrained();
+            $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Item::class)->constrained();
             $table->integer('quantity');
             $table->timestamp('consumed_at');

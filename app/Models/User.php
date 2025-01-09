@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Traits\HasManyConsumptions;
+use App\Models\Traits\HasManyDailyLimits;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +14,7 @@ use Filament\Panel;
 
 class User extends Authenticatable  implements FilamentUser
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasManyConsumptions, HasManyDailyLimits;
 
     /**
      * The attributes that are mass assignable.
@@ -38,8 +41,16 @@ class User extends Authenticatable  implements FilamentUser
         return $this->hasMany(Procurement::class);
     }
 
-    public function employee(){
-        return $this->belongsTo(Employee::class);
+    public function consumptionRequests(){
+        return $this->hasMany(ConsumptionRequest::class);
+    }
+
+    public function vouchers(){
+        return $this->hasMany(Voucher::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(user::class);
     }
 
     /**

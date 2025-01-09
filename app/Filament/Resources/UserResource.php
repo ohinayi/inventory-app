@@ -31,7 +31,7 @@ class UserResource extends Resource
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('role')
                     ->required(),
-                Forms\Components\TextInput::make('employee_id')
+                Forms\Components\TextInput::make('user_id')
                     ->numeric(),
                 Forms\Components\TextInput::make('password')
                     ->password()
@@ -52,7 +52,7 @@ class UserResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('role')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('employee_id')
+                Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -80,7 +80,8 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ConsumptionsRelationManager::class,
+            RelationManagers\DailyLimitsRelationManager::class
         ];
     }
 

@@ -25,21 +25,21 @@ class DailyLimitResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('employee_id')
-                    ->relationship('employee', 'name')
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
                     ->searchable()
                     ->required(),
                 Forms\Components\Select::make('item_id')
                     ->relationship('item', 'name')
                     ->unique(modifyRuleUsing: function (Unique $rule, callable $get) {
                         return $rule
-                        ->where('employee_id', $get('employee_id'));
+                        ->where('user_id', $get('user_id'));
                             // ->where('school_id', $get('school_id')) // get the current value in the 'school_id' field
                             // ->where('year', $get('year'))
                             // ->where('name', $get('name'));
                     })
                     ->validationMessages([
-                        'unique' => 'A limit for the employee with the item has already being set',
+                        'unique' => 'A limit for the user with the item has already being set',
                     ])
                     ->required(),
                 Forms\Components\TextInput::make('limit')
@@ -52,7 +52,7 @@ class DailyLimitResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('employee.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('item.name')
                     ->sortable(),

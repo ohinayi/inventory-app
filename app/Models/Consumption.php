@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\BelongsToEmployee;
+use App\Models\Traits\BelongsTouser;
 use App\Models\Traits\BelongsToItem;
 use App\Rules\AvailableQuantityRule;
 use App\Rules\ExceedLimitRule;
@@ -15,18 +15,18 @@ use Illuminate\Support\Facades\DB;
 
 class Consumption extends Model
 {
-    use HasFactory, BelongsToEmployee,  BelongsToItem, Compoships;
+    use HasFactory, BelongsToUser,  BelongsToItem, Compoships;
 
     // public function limit(){
     //     return Attribute::get(function(){
-    //         $this->dailyLimit->limit ?? 
+    //         $this->dailyLimit->limit ??
     //     });
     // }
 
     public function daily_limit(): BelongsTo
     {
-        return $this->belongsTo(DailyLimit::class, ['employee_id', 'item_id'], ['employee_id', 'item_id']);
-        // return $this->belongsTo(DailyLimit::class, 'employee_id', 'item_id');
+        return $this->belongsTo(DailyLimit::class, ['user_id', 'item_id'], ['user_id', 'item_id']);
+        // return $this->belongsTo(DailyLimit::class, 'user_id', 'item_id');
     }
 
 
@@ -40,8 +40,8 @@ class Consumption extends Model
                 'quantity' => [
                     'required',
                     'numeric',
-                    new ExceedLimitRule($consumption->employee_id, $consumption->item_id, $consumption->consumed_at),
-                    new AvailableQuantityRule($consumption->item_id, $originalQuantity),
+                    new ExceedLimitRule($consumption->user_id, $consumption->item_id, $consumption->consumed_at),
+                    new AvailableQuantityRule($consumption->item_id),
                 ],
             ]);
 
@@ -52,7 +52,7 @@ class Consumption extends Model
         });
         static::created(function (Consumption $consumption) {
             $quantityDifference = $consumption->quantity - ($consumption->getOriginal('quantity') ?? 0);
-            
+
             DB::transaction(function () use ($consumption, $quantityDifference) {
                 $item = Item::query()->find($consumption->item_id);
                 $item->decrement('quantity', $quantityDifference);

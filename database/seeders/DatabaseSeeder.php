@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee;
+use App\Models\Item;
 use App\Models\User;
 use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->createAdminUser();
         $this->createManagerUser();
         $this->createKeeperUser();
+        $this->createItems();
 
         User::factory()->create([
             'name' => 'Test User',
@@ -40,9 +41,6 @@ class DatabaseSeeder extends Seeder
 
     public function createManagerUser(){
         $name = "Ahmed Mahmood";
-        Employee::query()->create([
-            "name" => $name
-        ]);
         User::query()->create([
             "name" => $name,
             "email" => "ahmed.mahmood@hanscadi.ng",
@@ -54,9 +52,6 @@ class DatabaseSeeder extends Seeder
 
     public function createKeeperUser(){
         $name = "Nana Firdausi";
-        Employee::query()->create([
-            "name" => $name
-        ]);
         User::query()->create([
             "name" => $name,
             "email" => "firdausi@hanscadi.ng",
@@ -64,5 +59,13 @@ class DatabaseSeeder extends Seeder
             "role"=> 'keeper',
             "email_verified_at" => Carbon::now(),
         ]);
+    }
+
+
+    public function createItems(){
+        Item::create(['name'=> 'Biscuit', 'quantity'=> 10 , 'default_limit'=>2]);
+        Item::create(['name'=> 'Milo', 'quantity'=> 10, 'default_limit'=>1]);
+        Item::create(['name'=> 'Milk', 'quantity'=> 10, 'default_limit'=>1]);
+        Item::create(['name'=> 'Salt']);
     }
 }

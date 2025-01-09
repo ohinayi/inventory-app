@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ConsumptionRequestController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Models\ConsumptionRequest;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Livewire\Volt\Volt;
@@ -11,15 +14,15 @@ Route::view('/', 'welcome');
 Route::name('keeper.')->group(function () {
     Volt::route('/keeper/', 'keeper.dashboard')->name('dashboard')->middleware('auth');
     Volt::route('/keeper/items', 'keeper.items')->name('items')->middleware('auth');
-    Volt::route('/keeper/employees', 'keeper.employees')->name('employees')->middleware('auth');
+    Volt::route('/keeper/users', 'keeper.users')->name('users')->middleware('auth');
     Volt::route('/keeper/consumptions', 'keeper.consumptions')->name('consumptions')->middleware('auth');
     Volt::route('/keeper/procurements', 'keeper.procurements')->name('procurements')->middleware('auth');
 });
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::apiResource('consumption-requests',ConsumptionRequestController::class)->except(['index', 'show']);
+
+Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
