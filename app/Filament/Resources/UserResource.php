@@ -31,11 +31,8 @@ class UserResource extends Resource
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('role')
                     ->required(),
-                Forms\Components\TextInput::make('user_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required(),
+                
+                
             ]);
     }
 
@@ -52,9 +49,7 @@ class UserResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('role')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+               
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

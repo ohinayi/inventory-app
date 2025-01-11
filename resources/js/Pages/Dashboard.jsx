@@ -62,7 +62,7 @@ export default function Dashboard({auth, items, consumptionRequests, vouchers}) 
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 max-w-7xl mx-auto space-y-6">
                             <div className="flex justify-between items-center">
-                                <h1 className="text-3xl font-bold">user Dashboard</h1>
+                                <h1 className="text-3xl font-bold">User Dashboard</h1>
                                 <div className="space-x-2">
 
                                     <Button onClick={() => setShowNewRequestModal(true)} className='text-white'>

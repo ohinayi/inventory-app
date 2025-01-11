@@ -1,3 +1,4 @@
+import ANavLink from '@/components/ANavLink';
 import ApplicationLogo from '@/components/ApplicationLogo';
 import Dropdown from '@/components/Dropdown';
 import NavLink from '@/components/NavLink';
@@ -30,6 +31,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+                                <ANavLink
+                                    href={route('keeper.dashboard')}
+                                    active={route().current('keeper.dashboard')}
+                                >
+                                    Keeper
+                                </ANavLink>
                             </div>
                         </div>
 

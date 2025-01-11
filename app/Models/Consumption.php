@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\BelongsTouser;
+use App\Models\Traits\BelongsToUser;
 use App\Models\Traits\BelongsToItem;
 use App\Rules\AvailableQuantityRule;
 use App\Rules\ExceedLimitRule;
